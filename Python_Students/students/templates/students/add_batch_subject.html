@@ -1,0 +1,12 @@
+{% extends 'students/base.html' %}
+
+{% block title %}Add Batch Subject{% endblock %}
+
+{% block content %}
+<h1>Add Batch Subject</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Add Subjects for All Students</button>
+</form>
+{% endblock %}

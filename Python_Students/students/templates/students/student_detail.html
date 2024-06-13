@@ -1,0 +1,83 @@
+{% extends 'students/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Student Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Student: {{ student.first_name }} {{ student.last_name }}</h5>
+        </div>
+        <div class="card-body">
+            <form action="{% url 'add_existing_course' student.id %}" method="post" class="mb-4">
+                <h5 class="card-title">Add a Separate Subject:</h5>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary mt-2">Add Subject</button>
+            </form>
+            <hr>
+            <table class="table table-striped mt-4">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Course</th>
+                        <th>Hours</th>
+                        <th>Attended Hours</th>
+                        <th>Attendance %</th>
+                        <th>Grade</th>
+                        <th>Debt</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student_course in student_courses %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ student_course.course.name }}</td>
+                        <td>{{ student_course.course.hours }}</td>
+                        <td>{{ student_course.attended_hours }}</td>
+                        <td>{{ student_course.attendance_percentage|floatformat:2 }}%</td>
+                        <td>{{ student_course.grade }}</td>
+                        <td>
+                            <form method="post" action="{% url 'toggle_student_debt' student.pk %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="student_course_pk" value="{{ student_course.pk }}">
+                                <input type="checkbox" name="has_debt" {% if student_course.debt_set.exists %}checked{% endif %} onchange="this.form.submit()">
+                            </form>
+                        </td>
+                        <td>
+                            <a href="{% url 'edit_student_course' student_course.pk %}" class="btn btn-primary btn-sm mr-2">Edit</a>
+                            <form action="{% url 'delete_student_course' student_course.pk %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="2"><strong>Total Attendance:</strong></td>
+                        <td>{{ total_hours }}</td>
+                        <td>{{ total_attended_hours }}</td>
+                        <td>{{ total_attendance_percentage|floatformat:2 }}%</td>
+                        <td>{{ average_grade }}</td>
+                        <td>{{ total_debts }}</td>
+                        <td colspan="2"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+            <form method="post" action="" class="mb-4">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="financial_debt">Financial Debt:</label>
+                    <input type="number" step="0.01" class="form-control" id="financial_debt" name="financial_debt" value="{{ financial_debt }}">
+                </div>
+                <button type="submit" class="btn btn-primary">Update Financial Debt</button>
+            </form>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

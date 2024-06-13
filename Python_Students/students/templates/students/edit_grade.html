@@ -1,0 +1,12 @@
+{% extends 'students/base.html' %}
+
+{% block title %}Edit Grade{% endblock %}
+
+{% block content %}
+<h1>Edit Grade for {{ student_course.student.name }} - {{ student_course.course.name }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Save Grade</button>
+</form>
+{% endblock %}

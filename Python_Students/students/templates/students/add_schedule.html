@@ -1,0 +1,12 @@
+{% extends 'students/base.html' %}
+
+{% block title %}Add Schedule{% endblock %}
+
+{% block content %}
+<h1>Add Schedule</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Add Schedule</button>
+</form>
+{% endblock %}

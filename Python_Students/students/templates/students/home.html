@@ -1,0 +1,57 @@
+{% extends 'students/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="jumbotron text-center">
+    <div class="container">
+        <h1 class="display-4">Welcome to the College Management System</h1>
+        <p class="lead">Manage groups, students, subjects, and schedules easily with our intuitive system.</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Groups</h5>
+                    <p class="card-text">View, add, and manage student groups.</p>
+                    <a href="{% url 'group_list' %}" class="btn btn-primary">Go to Groups</a>
+                    <a href="{% url 'group_add' %}" class="btn btn-secondary">Add Group</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Add Students</h5>
+                    <p class="card-text">Add new students to the system and assign them to groups.</p>
+                    <a href="{% url 'student_add' %}" class="btn btn-primary">Add Student</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Subjects</h5>
+                    <p class="card-text">View, add, and manage subjects.</p>
+                    <a href="{% url 'manage_subjects' %}" class="btn btn-primary">Go to Subjects List</a>
+                    <a href="{% url 'add_course' %}" class="btn btn-secondary">Add Subject</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Debts</h5>
+                    <p class="card-text">View students with academic or financial debts.</p>
+                    <a href="{% url 'student_debt_list' %}" class="btn btn-primary">Go to Debt List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

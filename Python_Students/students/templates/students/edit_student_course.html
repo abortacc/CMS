@@ -1,0 +1,16 @@
+{% extends 'students/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Edit Student Course{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Edit Course for {{ student_course.student.first_name }} {{ student_course.student.last_name }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary mt-3">Save</button>
+    </form>
+    <a href="{% url 'student_detail' student_course.student.pk %}" class="btn btn-secondary mt-4">Back to Student Detail</a>
+</div>
+{% endblock %}

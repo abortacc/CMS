@@ -1,0 +1,31 @@
+{% extends 'students/base.html' %}
+
+{% block title %}Groups{% endblock %}
+
+{% block content %}
+<h1>Groups</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Group Name</th>
+            <th scope="col">Number of Students</th>
+            <th scope="col">Attendance Percentage</th> 
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for group in groups %}
+        <tr>
+            <td><a href="{% url 'group_detail' group.pk %}">{{ group.name }}</a></td>
+            <td>{{ group.students.count }}</td>
+            <td>{{ group.group_attendance_percentage|floatformat:2 }}%</td> 
+            <td>
+                <a href="{% url 'group_detail' group.pk %}" class="btn btn-primary btn-sm">View</a>
+                <a href="{% url 'group_delete' group.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'group_add' %}" class="btn btn-primary">Add Group</a>
+{% endblock %}

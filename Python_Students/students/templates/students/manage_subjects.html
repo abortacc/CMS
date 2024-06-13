@@ -1,0 +1,45 @@
+{% extends 'students/base.html' %}
+
+{% block title %}Manage Subjects{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Manage Subjects</h1>
+        </div>
+        <div class="card-body">
+            <h2>Subjects:</h2>
+            <table class="table table-striped mt-4">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Hours</th>
+                        <th>Group</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ course.name }}</td>
+                        <td>{{ course.hours }}</td>
+                        <td>{{ course.group.name }}</td>
+                        <td>
+                            <a href="{% url 'delete_course' course.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <hr>
+            <a href="{% url 'add_course' %}" class="btn btn-primary">Add Subject</a>
+            <br>
+            <a href="{% url 'home' %}" class="btn btn-secondary mt-4">Back to Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'students/base.html' %}
+
+{% block title %}Debt Students{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="display-4">Students with Debts</h1>
+    <form method="get" class="form-inline mb-4">
+        <div class="form-group">
+            <label for="group-filter" class="mr-2">Filter by Group:</label>
+            <select id="group-filter" name="group" class="form-control">
+                <option value="">All Groups</option>
+                {% for group in groups %}
+                <option value="{{ group.id }}" {% if group.id|stringformat:"s" == selected_group %}selected{% endif %}>{{ group.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary ml-2">Filter</button>
+    </form>
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Academic Debts</th>
+                <th>Financial Debt</th>
+                <th>Attendance %</th>
+                <th>Group</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in debt_students %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    <a href="{% url 'student_detail' student.student.pk %}">
+                        {{ student.student.first_name }} {{ student.student.last_name }}
+                    </a>
+                </td>
+                <td>{{ student.total_debts }}</td>
+                <td>{{ student.financial_debt }}</td>
+                <td>{{ student.attendance_percentage|floatformat:2 }}%</td>
+                <td>{{ student.group.name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-4">Back to Home</a>
+</div>
+{% endblock %}

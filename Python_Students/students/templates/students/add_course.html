@@ -1,0 +1,15 @@
+{% extends 'students/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Subject{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Add Subject</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary mt-3">Add Course for Selected Group</button>
+    </form>
+</div>
+{% endblock %}
